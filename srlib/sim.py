@@ -73,15 +73,18 @@ class Logger:
     """
 
     def __init__(self) -> None:
-        raise NotImplementedError("L0.1")
+        #raise NotImplementedError("L0.1")
+        self.data: dict[str, list[float]] = {}
+
 
     def record(self, **kwargs: float) -> None:
-        """Store one sample of any number of named signals."""
-        raise NotImplementedError("L0.1")
+        for key, value in kwargs.items():
+            # If key doesn't exist, set it to [] then append the value
+            self.data.setdefault(key, []).append(value)
 
     def as_dict(self) -> dict[str, np.ndarray]:
-        """Return every recorded signal as a NumPy array."""
-        raise NotImplementedError("L0.1")
+        return {key: np.array(values) for key, values in self.data.items()}
+        #raise NotImplementedError("L0.1")
 
 
 def simulate(

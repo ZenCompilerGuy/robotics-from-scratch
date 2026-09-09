@@ -2,8 +2,8 @@
 
 Where I am, and what I've actually understood. Three sentences per lesson, in my own words — no copied jargon.
 
-**Current position:** Plan review (nothing started)
-**Last session:** 8 September 2026
+**Current position:** Level 0, Lesson 0.1 complete
+**Last session:** 9 September 2026
 
 ---
 
@@ -11,7 +11,7 @@ Where I am, and what I've actually understood. Three sentences per lesson, in my
 
 | Lesson | Done | Tests green | Boss fight |
 |---|---|---|---|
-| 0.1 NumPy for robotics | ☐ | ☐ | |
+| 0.1 NumPy for robotics | ☑ | ☑ | |
 | 0.2 Discrete time & integration | ☐ | ☐ | |
 | 0.3 Live plotting & logging | ☐ | ☐ | |
 | 0.4 Trig, Taylor, small-angle | ☐ | ☐ | |
@@ -29,6 +29,15 @@ Where I am, and what I've actually understood. Three sentences per lesson, in my
 ## Notes to self
 
 *(Your three sentences per lesson go here. Also: anything that didn't click, so we can come back to it.)*
+
+### L0.1 -- NumPy for robotics
+
+1. Python treats a plain list as a collection of objects, not a mathematical vector -- operators like `+` and `*` don't act elementwise on it. A NumPy array behaves like a single mathematical object, so a scalar or another array broadcasts across every element automatically, without writing a for loop. That's vectorisation.
+2. `np.linalg.norm` isn't a mean of anything -- it's the square root of the sum of the squared components. Used on `(vx, vy)`, that's exactly the vector's magnitude, i.e. speed.
+3. Speed is how fast the particle is moving, with direction stripped out -- that's what makes it a scalar instead of a vector (velocity).
+4. Dictionaries are a good way to store multiple named signals like position and velocity, since each name maps to its own growing list of values.
+5. `**kwargs` collects any number of keyword arguments into a dictionary inside the function, which is how `Logger.record` can accept an arbitrary set of named signals.
+
 
 ---
 
