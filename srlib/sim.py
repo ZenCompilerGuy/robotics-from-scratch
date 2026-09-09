@@ -42,7 +42,11 @@ def euler_step(f: Dynamics, t: float, x: np.ndarray, u: np.ndarray, dt: float) -
 
     Filled in: L0.2
     """
-    raise NotImplementedError("L0.2")
+    # TODO(L0.2): one line.
+    return x + dt * f(t, x, u)
+    #   k1 = f(t, x, u)
+    #   return x + dt * k1
+    #raise NotImplementedError("L0.2")
 
 
 def rk4_step(f: Dynamics, t: float, x: np.ndarray, u: np.ndarray, dt: float) -> np.ndarray:
@@ -54,7 +58,14 @@ def rk4_step(f: Dynamics, t: float, x: np.ndarray, u: np.ndarray, dt: float) -> 
 
     Filled in: L0.2
     """
-    raise NotImplementedError("L0.2")
+    # TODO(L0.2): the four stage evaluations (see notes.md for the derivation
+    # of why this exact weighting), each using f(t, x, u):
+    k1 = f(t,        x,             u)
+    k2 = f(t + dt/2, x + dt/2 * k1, u)
+    k3 = f(t + dt/2, x + dt/2 * k2, u)
+    k4 = f(t + dt,   x + dt   * k3, u)
+    return x + dt/6 * (k1 + 2*k2 + 2*k3 + k4)
+    #raise NotImplementedError("L0.2")
 
 
 class Logger:
@@ -73,18 +84,14 @@ class Logger:
     """
 
     def __init__(self) -> None:
-        #raise NotImplementedError("L0.1")
         self.data: dict[str, list[float]] = {}
-
 
     def record(self, **kwargs: float) -> None:
         for key, value in kwargs.items():
-            # If key doesn't exist, set it to [] then append the value
             self.data.setdefault(key, []).append(value)
 
     def as_dict(self) -> dict[str, np.ndarray]:
         return {key: np.array(values) for key, values in self.data.items()}
-        #raise NotImplementedError("L0.1")
 
 
 def simulate(
@@ -101,4 +108,15 @@ def simulate(
 
     Filled in: L0.2
     """
-    raise NotImplementedError("L0.2")
+    # TODO(L0.2): the loop from this module's own docstring. Log the state
+    # BEFORE advancing it (so the first logged entry is x0 at t=0), then step:
+    log = Logger()
+    x = x0.copy()
+    t = 0.0
+    while t < t_end:
+        u = controller(t, x)
+        log.record(t=t, x=x.copy(), u=u.copy() if hasattr(u, "copy") else u)
+        x = integrator(f, t, x, u, dt)
+        t += dt
+    return log.as_dict()
+    #raise NotImplementedError("L0.2")
