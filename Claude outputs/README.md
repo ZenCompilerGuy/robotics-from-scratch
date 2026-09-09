@@ -20,33 +20,12 @@ the controllers, the filters. No ROS, no library doing the interesting part for 
 
 ## Getting started
 
-Everything installs into a project-local virtual environment — nothing touches your system Python.
-
-**Windows (PowerShell), from the repo root:**
-
-```powershell
-python -m venv .venv
-.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
-python -m pip install -r setup/requirements.txt
-python setup/check_setup.py
-```
-
-**macOS / Linux:**
-
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
-python -m pip install --upgrade pip
-python -m pip install -r setup/requirements.txt
+pip install -r setup/requirements.txt
 python setup/check_setup.py
 ```
 
-`check_setup.py` refuses to pass unless you're actually inside the venv, so you can't get this
-subtly wrong. Every session after the first, just activate — look for the `(.venv)` prefix on
-your prompt. Full instructions, VS Code setup and troubleshooting: [`setup/README.md`](setup/README.md).
-
-Then open a Cowork session in the *Learning Probabilistic Robotics* project and say **"Lesson 0.1"**.
+Then open a Cowork session in the *Learning Stochastic Robotics* project and say **"Lesson 0.1"**.
 
 ## Layout
 
@@ -55,7 +34,6 @@ Then open a Cowork session in the *Learning Probabilistic Robotics* project and 
 | `PLAN.md` | The full framework, curriculum and the reasoning behind both |
 | `PROGRESS.md` | Running log — where I am, and each lesson in my own words |
 | `PROJECT_INSTRUCTIONS.md` | The tutor brief pasted into the Claude project |
-| `setup/` | Virtual environment instructions, requirements, environment checker |
 | `srlib/` | The robotics library, built up lesson by lesson |
 | `level0/` … `level5/` | Lesson folders: `notes.md`, `lesson.py`, `test_lesson.py`, `sabotage.py` |
 | `_solutions/` | Worked solutions, mirrored structure |

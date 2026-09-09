@@ -1,9 +1,12 @@
 """
-Run me first:  python setup/check_setup.py
+Run me first — from inside the activated virtual environment:
 
-Tells you exactly what's installed, what's missing, and the one command
-that fixes it. Safe to run any time.
+    python setup/check_setup.py
+
+Tells you whether you're in the venv, what's installed, what's missing, and
+the one command that fixes it. Safe to run any time.
 """
+import os
 import sys
 import subprocess
 import shutil
@@ -27,13 +30,36 @@ GREEN, RED, YELLOW, DIM, BOLD, RESET = (
 )
 
 
+def in_virtualenv() -> bool:
+    """True if this interpreter is a venv/virtualenv, not the system Python."""
+    return sys.prefix != getattr(sys, "base_prefix", sys.prefix)
+
+
+def activate_hint() -> str:
+    """The right activation command for whatever shell we appear to be in."""
+    if os.name == "nt":
+        return r".venv\Scripts\Activate.ps1      (PowerShell)   or   .venv\Scripts\activate.bat  (cmd)"
+    return "source .venv/bin/activate"
+
+
 def main() -> int:
     print(f"\n{BOLD}Robotics from Scratch — environment check{RESET}\n")
 
     ok = True
     missing_required, missing_optional = [], []
 
+    # --- Virtual environment --------------------------------------------
+    venv = in_virtualenv()
+    if venv:
+        print(f"  {GREEN}OK{RESET}   virtual environment active")
+        print(f"       {DIM}{sys.prefix}{RESET}")
+    else:
+        ok = False
+        print(f"  {RED}NO{RESET}   NOT in a virtual environment — this is the system Python")
+        print(f"       {DIM}Installing course packages here pollutes your global Python{RESET}")
+
     # --- Python version -------------------------------------------------
+    print()
     v = sys.version_info
     if (v.major, v.minor) >= MIN_PY:
         print(f"  {GREEN}OK{RESET}   Python {v.major}.{v.minor}.{v.micro}")
@@ -74,12 +100,23 @@ def main() -> int:
 
     # --- Verdict --------------------------------------------------------
     print()
+
+    if not venv:
+        print(f"{RED}{BOLD}Fix this first — create and activate the venv:{RESET}\n")
+        print("    python -m venv .venv")
+        print(f"    {activate_hint()}")
+        print("    python -m pip install -r setup/requirements.txt")
+        print("    python setup/check_setup.py\n")
+        print(f"{DIM}Ignore the package list above until you're in the venv — that's your")
+        print(f"system Python's packages, not the course's.{RESET}\n")
+        return 1
+
     if missing_required:
         print(f"{RED}Missing required packages.{RESET} Run this:\n")
-        print(f"    pip install {' '.join(missing_required)}\n")
+        print(f"    python -m pip install {' '.join(missing_required)}\n")
     if missing_optional:
         print(f"{YELLOW}Optional, install when you reach Level 3:{RESET}\n")
-        print(f"    pip install {' '.join(missing_optional)}\n")
+        print(f"    python -m pip install {' '.join(missing_optional)}\n")
 
     if ok and not missing_required:
         print(f"{GREEN}{BOLD}All good. You're ready for Lesson 0.1.{RESET}\n")

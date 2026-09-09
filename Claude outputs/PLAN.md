@@ -226,37 +226,13 @@ The point of `srlib/` is that **you are building a robotics library, not doing 3
 
 ## 5. Setup — everything free
 
-**Python 3.11 or 3.12** from [python.org](https://python.org), installed into a **project-local
-virtual environment** (`.venv/`). Nothing goes into your system Python.
-
-```powershell
-python -m venv .venv
-.venv\Scripts\Activate.ps1
-python -m pip install -r setup/requirements.txt
-python setup/check_setup.py
-```
-
-The venv matters more than it looks. This course pins particular versions of NumPy, SciPy and
-python-control; your MRobotEng papers and anything else you build this year will want different
-ones. Keeping them separate is the difference between "my code stopped working and I don't know
-why" and never having that problem. It also means a broken environment is a one-minute fix:
-delete `.venv/`, rebuild from `requirements.txt`. `.venv/` is gitignored, so it never enters
-the repo — anyone cloning it (including future you on another machine) rebuilds it from the
-requirements file, which is the point of having one.
-
-`check_setup.py` refuses to pass unless you're actually inside the venv, so this can't go
-subtly wrong and surface three lessons later as a mystery import error.
-
-The whole dependency list:
+**Python 3.11 or 3.12** (via [python.org](https://python.org) or Miniconda — your choice, I'll walk you through either).
 
 ```
-numpy scipy matplotlib pytest control imageio pybullet
+numpy scipy matplotlib jupyter pytest pybullet control imageio
 ```
 
-`control` is the Python Control Systems Library — the free stand-in for MATLAB's Control System
-Toolbox, and what we'll check your hand-written `place()` and `lqr()` against. `pybullet` isn't
-needed until Level 3. Full setup, VS Code configuration and troubleshooting live in
-`setup/README.md`.
+That's the whole dependency list. `control` is the Python Control Systems Library — it's the free stand-in for MATLAB's Control System Toolbox, and it's what we'll check your hand-written `place()` and `lqr()` against.
 
 **Editor:** VS Code with the Python extension. Free.
 **Version control: GitHub from day one, one commit per lesson.** The commit history is a
@@ -363,8 +339,7 @@ again; that is a faster and cheaper fix than defaulting to Opus for everything.
 ## 11. What's already built (as of 9 September 2026)
 
 - `PLAN.md`, `README.md`, `PROGRESS.md`, `PROJECT_INSTRUCTIONS.md`
-- `setup/` — `requirements.txt`, `check_setup.py` (run it first; it verifies you're in the venv),
-  and `README.md` with venv creation, VS Code configuration and troubleshooting
+- `setup/` — `requirements.txt` and `check_setup.py` (run it first)
 - `srlib/` — the full library skeleton: every module, class and function signature with
   docstrings explaining what it does and which lesson fills it in. **Deliberately unimplemented.**
   Every body raises `NotImplementedError("L0.2")` and so on — the architecture is given to you,

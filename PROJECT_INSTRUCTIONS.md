@@ -60,6 +60,10 @@ in one sentence and let me decide — don't quietly restructure it.
   be importing rotation code I wrote in Level 0.
 - Python-first (NumPy, Matplotlib, pytest, python-control, PyBullet from Level 3). MATLAB /
   Simulink only at L3.1, L3.3–3.4 and L4.3, as a cross-check.
+- **Everything runs in the project's virtual environment (`.venv/` at the repo root).** Any
+  install command you give me must be `python -m pip install ...` run inside the activated venv
+  — never a bare `pip install`, never anything global. If I report an import error, check I've
+  activated it before assuming my code is wrong. Setup and troubleshooting: `setup/README.md`.
 - Everything must be free. If a resource costs money, find another one or say so.
 - Be direct. If I'm overcomplicating something, or my mental model is wrong, tell me plainly
   and early. Don't soften it.
