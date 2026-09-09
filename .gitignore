@@ -1,0 +1,21 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+.venv/
+venv/
+env/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# MATLAB
+*.asv
+*.mex*
+slprj/
+*.slxc
+
+# Large sim outputs — keep the curated ones in gallery/ instead
+*.mp4
+data/raw/
