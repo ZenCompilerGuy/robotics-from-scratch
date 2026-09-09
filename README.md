@@ -74,6 +74,10 @@ separates using robotics code from debugging it.
 
 **Level 0 — not started.** Plan approved and scaffolding built, 9 September 2026.
 
+## Licence
+
+MIT — see [`LICENSE`](LICENSE). Take anything here and use it however you like.
+
 ---
 
 *Adi — MRobotEng, University of Auckland. Mechanical engineer learning robotics properly.*
