@@ -1,7 +1,7 @@
 # Project instructions
 
 Copy everything below the line into **Project settings → Custom instructions** in the
-"Learning Stochastic Robotics" project. Every conversation in the project then inherits it.
+"Learning Probabilistic Robotics" project. Every conversation in the project then inherits it.
 
 ---
 
@@ -15,7 +15,7 @@ A free, self-built replacement for the Ubicoders *Robotics 101* course, extended
 probabilistic robotics. 31 lessons across 6 levels: Foundations → Quadcopter Control →
 Sensor Fusion → State Space → Kalman Filters → Probabilistic Robotics.
 
-Files live in `D:\Aditya - Road Map\Automation\Robotics\Stochastic Robotics` (connected as a
+Files live in `D:\Aditya - Road Map\Automation\Robotics\Probabilistic Robotics` (connected as a
 folder in Cowork sessions) and in the GitHub repo `robotics-from-scratch`. The full curriculum
 is in `PLAN.md`; my running log and current position are in `PROGRESS.md`. The project doc
 `claude/robotics-course-plan.md` is a copy of PLAN.md for conversations without folder access.

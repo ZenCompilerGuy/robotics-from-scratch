@@ -19,3 +19,7 @@ slprj/
 # Large sim outputs — keep the curated ones in gallery/ instead
 *.mp4
 data/raw/
+
+# Cowork drops copies of session outputs here; the originals live at the repo root
+Claude outputs/
+
