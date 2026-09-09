@@ -1,5 +1,12 @@
+# Core dependencies — needed from Lesson 0.1 onwards.
 # Everything here is free and open source.
-# Install with:  pip install -r setup/requirements.txt
+#
+#   python -m pip install -r setup/requirements.txt
+#
+# The 3D physics engine is deliberately NOT in this file. It lives in
+# requirements-sim.txt and isn't needed until Level 3. One package failing to
+# build should never block the other six — which is exactly what happened the
+# first time round.
 
 numpy>=1.26          # arrays and linear algebra — used in every lesson
 scipy>=1.11          # solve_continuous_are for LQR (Level 3)
@@ -7,9 +14,6 @@ matplotlib>=3.8      # plots and animations
 pytest>=8.0          # the green light on each lesson
 control>=0.10        # Python Control Systems Library — free MATLAB Control Toolbox stand-in
 imageio>=2.34        # export animations to GIF for the gallery
-
-# Level 3 onward — install when you get there (~80 MB)
-pybullet>=3.2.6
 
 # Optional, only if you prefer notebooks to plain .py files
 # jupyter>=1.0

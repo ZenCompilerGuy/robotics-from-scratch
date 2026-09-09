@@ -51,6 +51,17 @@ python setup/check_setup.py
 `check_setup.py` will tell you if you're not actually in the venv, so you can't get this
 subtly wrong and only find out three lessons later.
 
+The 3D physics engine is **not** in `requirements.txt` — it's in `requirements-sim.txt` and
+isn't needed until Level 3. Install it when you get there:
+
+```powershell
+python -m pip install -r setup/requirements-sim.txt
+```
+
+Keeping them separate is deliberate: pip installs a requirements file all-or-nothing, so one
+package failing to build takes the other six down with it. No reason to let a simulator you
+won't touch for months block Lesson 0.1.
+
 ---
 
 ## Every session after that
@@ -109,6 +120,25 @@ bottom of the first installer screen. Try `py -3` in the meantime.
 You're not in the venv, or you're running pytest from the wrong directory. Check for the
 `(.venv)` prefix, and run pytest from the repo root — `conftest.py` there is what makes
 `import srlib` resolve.
+
+**`error: Microsoft Visual C++ 14.0 or greater is required` / `Failed building wheel for <x>`**
+
+pip couldn't find a prebuilt wheel for your Python version, so it fell back to compiling the
+package from C++ source — and that needs a compiler you don't have. Two things to know:
+
+*Don't install the Visual C++ Build Tools to fix this.* They're several gigabytes and it's
+almost always the wrong answer. A missing wheel means the package doesn't support your Python
+version yet, and compiling it yourself is a fragile workaround, not a fix.
+
+*The right fix is to check whether the package supports your Python at all.* Look at the
+package's PyPI "Download files" page for a wheel matching your version — `cp314` for Python
+3.14, `cp312` for 3.12, or `py3-none-any` which works everywhere. If there isn't one, either
+the package needs a newer release or you need a different package. This is exactly what
+happened with PyBullet on this course, and why we use MuJoCo instead (see
+`requirements-sim.txt`).
+
+Check your version with `python --version`. Running a very new Python — 3.14 was released
+recently — means occasionally arriving before a package does.
 
 **Everything's broken and you want a clean slate**
 

@@ -1,0 +1,15 @@
+# 3D physics engine — not needed until Level 3.
+#
+#   python -m pip install -r setup/requirements-sim.txt
+#
+# MuJoCo, not PyBullet. PyBullet's latest release (3.2.7) ships no Windows
+# wheels at all and none for any Python above 3.11, so on a current Python it
+# tries to compile Bullet from C++ source and demands the Visual C++ build
+# tools. It's been in maintenance mode for years.
+#
+# MuJoCo is open source (Apache 2.0, DeepMind), actively developed, ships
+# Windows wheels for Python 3.10-3.14, and is what robotics research actually
+# runs on now. It also has a built-in interactive viewer, which PyBullet's GUI
+# never matched.
+
+mujoco>=3.2

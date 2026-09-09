@@ -21,7 +21,7 @@ PACKAGES = [
     ("pytest",     "pytest",     "the green light on each lesson", True),
     ("control",    "control",    "free stand-in for MATLAB's Control System Toolbox (Level 3)", True),
     ("imageio",    "imageio",    "exporting animations as GIFs for your gallery/portfolio", True),
-    ("pybullet",   "pybullet",   "3D physics engine (Level 3 onward)", False),
+    ("mujoco",     "mujoco",     "3D physics engine (Level 3 onward)", False),
     ("jupyter",    "jupyter",    "notebooks, if you prefer them to plain scripts", False),
 ]
 
@@ -114,9 +114,12 @@ def main() -> int:
     if missing_required:
         print(f"{RED}Missing required packages.{RESET} Run this:\n")
         print(f"    python -m pip install {' '.join(missing_required)}\n")
-    if missing_optional:
-        print(f"{YELLOW}Optional, install when you reach Level 3:{RESET}\n")
-        print(f"    python -m pip install {' '.join(missing_optional)}\n")
+    if "mujoco" in missing_optional:
+        print(f"{YELLOW}Not needed until Level 3 — install it when you get there:{RESET}\n")
+        print("    python -m pip install -r setup/requirements-sim.txt\n")
+    if "jupyter" in missing_optional:
+        print(f"{DIM}jupyter is optional — only if you prefer notebooks to .py files:{RESET}\n")
+        print("    python -m pip install jupyter\n")
 
     if ok and not missing_required:
         print(f"{GREEN}{BOLD}All good. You're ready for Lesson 0.1.{RESET}\n")

@@ -2,7 +2,7 @@
 cartpole.py — a pendulum on a cart. The fruit fly of control theory.
 
 Filled in during L3.5. Balanced with LQR in boss fight BF3, then ported to
-PyBullet so you can watch your controller survive real contact physics.
+MuJoCo so you can watch your controller survive real contact physics.
 
 State:
     x        cart position        [m]

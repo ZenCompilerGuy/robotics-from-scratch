@@ -68,7 +68,7 @@ Each level ends with an integrated challenge with **no scaffolding** — a blank
 You chose both, which is the right call:
 
 - **Hand-built NumPy sims** for Levels 0–4. Every equation is visible and editable. When your drone flips, you can trace it to a line of physics *you wrote*. This is where the maths intuition is built.
-- **PyBullet** for the Level 3 pendulum port and the Level 5 capstone. Free, real contact dynamics, a proper 3D view, and it's what a lot of real research code uses. Once your controller works in your own sim, porting it to PyBullet and watching it *still work* is the moment the subject stops feeling like homework.
+- **MuJoCo** for the Level 3 pendulum port and the Level 5 capstone. Free, real contact dynamics, a proper 3D view, and it's what a lot of real research code uses. Once your controller works in your own sim, porting it to MuJoCo and watching it *still work* is the moment the subject stops feeling like homework.
 
 ### 2.5 MATLAB / Simulink's role
 
@@ -145,7 +145,7 @@ Mapping to the original course is shown so you can see nothing is missing.
 | 3.3 | Pole placement | If you can steer the system's own eigenvalues, you can choose how it behaves. Controllability is the catch | `place()`, hand-written, checked against MATLAB |
 | 3.4 | LQR | Stop guessing poles. Write down what you *care about* (Q and R), and the optimal gain falls out | LQR solver; Q/R tuning experiments |
 | 3.5 | Inverted pendulum | Linearise about the unstable equilibrium; balance it. The classic, for good reason | Cart-pole in NumPy |
-| **BF3** | **Boss fight** | — | **Balance a cart-pole with LQR from a blank file, then port it to PyBullet and watch it survive real contact physics. Stretch: energy-based swing-up.** |
+| **BF3** | **Boss fight** | — | **Balance a cart-pole with LQR from a blank file, then port it to MuJoCo and watch it survive real contact physics. Stretch: energy-based swing-up.** |
 
 ---
 
@@ -177,12 +177,12 @@ you out of UAVs, which is where your Dron-Aid experience already sits. A second 
 | 5.2 | Motion & measurement models | `p(x_t \| u_t, x_{t-1})` and `p(z_t \| x_t)`. Odometry noise is not Gaussian and pretending it is has consequences | Sampled motion model, banana-shaped uncertainty |
 | 5.3 | Particle filter / MCL | When your belief isn't a Gaussian, represent it with a thousand guesses and resample. Solves problems the KF structurally cannot | Monte Carlo localisation |
 | 5.4 | Grid maps & a look at SLAM | Occupancy grids; the chicken-and-egg of mapping while localising; what EKF-SLAM and graph-SLAM do | Occupancy grid from range scans |
-| **CAP** | **Capstone** | — | **Kidnapped robot: a differential-drive robot in PyBullet, unknown start pose, known map, noisy range sensor. Localise and drive to a goal.** |
+| **CAP** | **Capstone** | — | **Kidnapped robot: a differential-drive robot in MuJoCo, unknown start pose, known map, noisy range sensor. Localise and drive to a goal.** |
 
 ---
 
 ### **Level 6 — Optional side quests** (pick any, any time)
-- Port the quadcopter to PyBullet with real aerodynamics
+- Port the quadcopter to MuJoCo with real aerodynamics
 - Unscented Kalman filter, and why it often beats the EKF
 - A* / RRT path planning to feed your waypoint executor
 - Model Predictive Control on the cart-pole
@@ -194,7 +194,7 @@ you out of UAVs, which is where your Dron-Aid experience already sits. A second 
 ## 4. What gets built on disk
 
 ```
-Stochastic Robotics/
+Probabilistic Robotics/
 ├── README.md                 ← how to use this, start here each session
 ├── PLAN.md                   ← this file
 ├── PROGRESS.md               ← your log; where you left off; your own words
@@ -247,16 +247,30 @@ requirements file, which is the point of having one.
 `check_setup.py` refuses to pass unless you're actually inside the venv, so this can't go
 subtly wrong and surface three lessons later as a mystery import error.
 
-The whole dependency list:
+The dependency list, split into two files on purpose:
 
 ```
-numpy scipy matplotlib pytest control imageio pybullet
+setup/requirements.txt       numpy scipy matplotlib pytest control imageio
+setup/requirements-sim.txt   mujoco
 ```
+
+pip installs a requirements file all-or-nothing, so one package failing to build takes every
+other package in that file down with it. There's no reason to let a physics engine you won't
+touch until Level 3 block Lesson 0.1 — which is exactly what happened on the first attempt.
 
 `control` is the Python Control Systems Library — the free stand-in for MATLAB's Control System
-Toolbox, and what we'll check your hand-written `place()` and `lqr()` against. `pybullet` isn't
+Toolbox, and what we'll check your hand-written `place()` and `lqr()` against. `mujoco` isn't
 needed until Level 3. Full setup, VS Code configuration and troubleshooting live in
 `setup/README.md`.
+
+**Why MuJoCo and not PyBullet** (changed 9 September 2026, after the first install attempt
+failed): PyBullet's latest release ships no Windows wheels at all, and none for any Python
+above 3.11, so on a current Python pip falls back to compiling Bullet from C++ source and
+demands the multi-gigabyte Visual C++ build tools. It's been in maintenance mode for years.
+MuJoCo is open source under Apache 2.0, actively developed by DeepMind, ships Windows wheels
+for Python 3.10–3.14, has a better built-in interactive viewer, and is what robotics research
+actually runs on now. The course content doesn't change — only which engine the Level 3 and
+Level 5 ports target.
 
 **Editor:** VS Code with the Python extension. Free.
 **Version control: GitHub from day one, one commit per lesson.** The commit history is a
@@ -286,7 +300,7 @@ I will never send you a 40-hour playlist. Each lesson names at most 1–2 items,
 | **Brian Douglas — Control System Lectures** (YouTube) | L0.8, L3.2–3.4. Short, physical, excellent | Free |
 | **Steve Brunton — Control Bootcamp** (YouTube) | L3.1–3.4, when you want it deeper | Free |
 | **Russ Tedrake — *Underactuated Robotics*** (MIT, free online textbook) | L3.5 pendulum, L6 MPC | Free |
-| **PyBullet Quickstart Guide** | Level 3 port, Level 5 capstone | Free |
+| **[MuJoCo documentation](https://mujoco.readthedocs.io)** — the Overview and "Modeling" pages | Level 3 port, Level 5 capstone | Free |
 | **Thrun/Burgard/Fox — *Probabilistic Robotics*** | Level 5 concepts. The book itself isn't free, but the ideas are well covered by Labbe's book + the authors' lecture slides, which are online. Your university library will have a copy. | See note |
 
 ---
@@ -319,7 +333,8 @@ Honestly, not much: show up, attempt before looking at solutions, and **tell me 
 |---|---|
 | Toolchain | Python-first; MATLAB/Simulink as a cross-check at L3.1, L3.3–3.4, L4.3 |
 | Teaching mode | Fill-in-the-blanks with pytest gates |
-| Simulator | Hand-built NumPy through Level 2; PyBullet from Level 3 onward |
+| Simulator | Hand-built NumPy through Level 2; MuJoCo from Level 3 onward (was PyBullet; see §5) |
+| Python | 3.14 on Windows, in a project-local `.venv` |
 | Scope | Full course coverage + Level 5 probabilistic capstone |
 | Level 5 platform | Differential-drive UGV. UAV localisation available later as a side quest |
 | Version control | GitHub from day one, one commit per lesson |

@@ -58,7 +58,7 @@ in one sentence and let me decide — don't quietly restructure it.
 - **Make me build up `srlib/`.** Each lesson fills in stubs that already exist there with
   signatures and docstrings. Don't rewrite the API — implement against it. By Level 5 I should
   be importing rotation code I wrote in Level 0.
-- Python-first (NumPy, Matplotlib, pytest, python-control, PyBullet from Level 3). MATLAB /
+- Python-first (NumPy, Matplotlib, pytest, python-control, MuJoCo from Level 3). MATLAB /
   Simulink only at L3.1, L3.3–3.4 and L4.3, as a cross-check.
 - **Everything runs in the project's virtual environment (`.venv/` at the repo root).** Any
   install command you give me must be `python -m pip install ...` run inside the activated venv

@@ -14,7 +14,7 @@ the controllers, the filters. No ROS, no library doing the interesting part for 
 | **0 — Foundations** | Simulation loops, integrators, rotations and DCMs, PID by feel, noisy sensor models |
 | **1 — Control** | A 6-DOF quadcopter from Newton–Euler, flown by a five-loop cascade through a waypoint mission |
 | **2 — Sensor fusion** | Complementary and DCM filters recovering attitude from a lying IMU |
-| **3 — State space** | `ẋ = Ax + Bu`, pole placement, LQR, an inverted pendulum balanced in NumPy and PyBullet |
+| **3 — State space** | `ẋ = Ax + Bu`, pole placement, LQR, an inverted pendulum balanced in NumPy and MuJoCo |
 | **4 — Kalman** | The KF derived from multiplying Gaussians, then an EKF hitting <0.5° attitude error |
 | **5 — Probabilistic robotics** | Bayes filters, probabilistic motion models, a particle filter solving the kidnapped-robot problem |
 
